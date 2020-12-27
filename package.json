@@ -1,0 +1,38 @@
+{
+	"name": "Amazonish",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node app.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/OsheaRD/Amazonish.git"
+	},
+	"keywords": [],
+	"author": "Jason Deng, Oshea Deans",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/OsheaRD/Amazonish/issues"
+	},
+	"homepage": "https://github.com/OsheaRD/Amazonish#readme",
+	"dependencies": {
+		"bcrypt": "^5.0.0",
+		"cors": "^2.8.5",
+		"dotenv": "^8.2.0",
+		"ejs": "^3.1.5",
+		"express": "^4.17.1",
+		"express-session": "^1.17.1",
+		"passport": "^0.4.1",
+		"passport-github": "^1.1.0",
+		"passport-local": "^1.0.0",
+		"pg": "^8.5.1",
+		"sequelize": "^6.3.5",
+		"session-file-store": "^1.5.0"
+	},
+	"devDependencies": {
+		"sequelize-cli": "^6.2.0"
+	}
+}
