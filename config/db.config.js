@@ -2,7 +2,7 @@ module.exports = {
 	HOST: "127.0.0.1",
 	USER: "",
 	PASSWORD: "null",
-	DB: "DATABASE_URL",
+	DB: process.env.DATABASE_URL,
 	dialect: "postgres",
 	pool: {
 		max: 5,
