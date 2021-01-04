@@ -4,9 +4,9 @@ const Product = db.product;
 const Op = db.Sequelize.Op;
 
 exports.getIndex = (req, res, next) => {
-	const title = req.body.search;
+	const title = req.query.title;
 	let condition = title ? {title: {[Op.iLike]: `%${title}%`}} : null;
-
+	console.log(title);
 	Product.findAll({where: condition})
 		.then(products => {
 			res.render("shop/index", {
@@ -26,7 +26,6 @@ exports.getProducts = (req, res, next) => {
 	// After log in
 	const title = req.query.title;
 	let condition = title ? {title: {[Op.iLike]: `%${title}%`}} : null;
-
 	Product.findAll({where: condition})
 		.then(products => {
 			res.render("shop/product-list", {
@@ -43,12 +42,12 @@ exports.getProducts = (req, res, next) => {
 };
 
 exports.getProduct = (req, res, next) => {
-	const id = req.params.productId;
-	Product.findAll({where: {id: id}})
-		.then(products => {
+	const prodId = req.params.productId;
+	Product.findByPk(prodId)
+		.then(product => {
 			res.render("shop/product-detail", {
-				product: products[0],
-				pageTitle: products[0].title,
+				product: product,
+				pageTitle: product.title,
 				path: "/products",
 			});
 		})

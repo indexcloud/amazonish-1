@@ -1,41 +1,56 @@
 <div class="backdrop"></div>
 <header class="main-header">
     <button id="side-menu-toggle">Menu</button>
-    <nav class="main-header__nav">
-        <ul class="main-header__item-list">
-            <li class="main-header__item">
-                <form action="/" method="GET">
-                    <input type="text" name="search" placeholder="Search for Products">
+    <div class="main-header__logo">
+        <% if (!isAuthenticated) {%>
+            <a class="logo" href="/"><img src="/img/logo.jpeg" alt="amazonish logo"></a>
+            <% } else { %>
+                <a class="logo" href="/products"><img src="/img/logo.jpeg" alt="amazonish logo"></a>
+                <% } %>
+    </div>
+    <div class="main-header__search-bar">
+        <% if (!isAuthenticated) {%>
+            <form action="/" method="GET">
+                <input type="text" name="title" placeholder="Search for Products">
+                <button class="btn" type="submit">Search</button>
+            </form>
+            <% } else { %>
+                <form action="/products" method="GET">
+                    <input type="text" name="title" placeholder="Search for Products">
                     <button class="btn" type="submit">Search</button>
                 </form>
+                <% } %>
+    </div>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <% if (!isAuthenticated) {%>
+                <li class="main-header__item">
+                    <a class="<%= path === '/signin' ? 'active' : '' %>" href="/signin">Sign In</a>
+                </li>
 
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/signin' ? 'active' : '' %>" href="/signin">Sign In</a>
-            </li>
-            <li class="main-header__item">
-                <a href="/signout">Sign Out</a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/signup' ? 'active' : '' %>" href="/signup">Sign Up</a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
-            </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-            </li>
+                <% } else { %>
+                    <li class="main-header__item">
+                        <a href="/signout">Sign Out</a>
+                    </li>
+                    <% } %>
+        </ul>
+        <ul class="main-header__item-list">
             <li class="main-header__item">
                 <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
             </li>
             <li class="main-header__item">
-                <a class="<%= path === '/merchant/add-product' ? 'active' : '' %>" href="/merchant/add-product">Add
-                    Product</a>
+                <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
             </li>
-            <li class="main-header__item">
-                <a class="<%= path === '/merchant/products' ? 'active' : '' %>" href="/merchant/products">Merchant
-                    Products</a>
-            </li>
+            <% if (isAuthenticated) { %>
+                <li class="main-header__item">
+                    <a class="<%= path === '/merchant/add-product' ? 'active' : '' %>" href="/merchant/add-product">Add
+                        Product</a>
+                </li>
+                <li class="main-header__item">
+                    <a class="<%= path === '/merchant/products' ? 'active' : '' %>" href="/merchant/products">Merchant
+                        Products</a>
+                </li>
+                <% } %>
         </ul>
     </nav>
 </header>
@@ -49,18 +64,34 @@
             <a class="<%= path === '/products' ? 'active' : '' %>" href="/products">Products</a>
         </li>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
-        </li>
-        <li class="mobile-nav__item">
             <a class="<%= path === '/orders' ? 'active' : '' %>" href="/orders">Orders</a>
         </li>
         <li class="mobile-nav__item">
-            <a class="<%= path === '/merchant/add-product' ? 'active' : '' %>" href="/merchant/add-product">Add Product
-            </a>
+            <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
         </li>
-        <li class="mobile-nav__item">
-            <a class="<%= path === '/merchant/products' ? 'active' : '' %>" href="/merchant/products">Merchant Products
-            </a>
-        </li>
+        <% if (isAuthenticated) { %>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/merchant/add-product' ? 'active' : '' %>" href="/merchant/add-product">Add
+                    Product
+                </a>
+            </li>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/merchant/products' ? 'active' : '' %>" href="/merchant/products">Merchant
+                    Products
+                </a>
+            </li>
+            <% } %>
+    </ul>
+    <ul class="mobile-nav__item-list">
+        <% if (!isAuthenticated) {%>
+            <li class="mobile-nav__item">
+                <a class="<%= path === '/signin' ? 'active' : '' %>" href="/signin">Sign In</a>
+            </li>
+
+            <% } else { %>
+                <li class="mobile-nav__item">
+                    <a href="/signout">Sign Out</a>
+                </li>
+                <% } %>
     </ul>
 </nav>

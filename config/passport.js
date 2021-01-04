@@ -3,12 +3,14 @@ const bcrypt = require("bcrypt");
 module.exports = (passport, user) => {
 	const User = user;
 	const LocalStrategy = require("passport-local").Strategy;
+	const GoogleStrategy = require("passport-google-oauth").OAuth2Strategy;
 
+	// Local Sign Up
 	passport.use(
 		"local-signup",
 		new LocalStrategy(
 			{
-				usernameField: "username",
+				usernameField: "email",
 				passwordField: "password",
 				passReqToCallback: true, // allows us to pass back the entire request to the callback
 			},
@@ -20,7 +22,7 @@ module.exports = (passport, user) => {
 
 				User.findOne({
 					where: {
-						username: username,
+						email: username,
 					},
 				}).then(user => {
 					if (user) {
@@ -30,9 +32,7 @@ module.exports = (passport, user) => {
 					} else {
 						const userPassword = generateHash(password);
 						const data = {
-							role: username === "merchant" ? "0" : "1",
-							username: username,
-							email: req.body.email,
+							email: username,
 							password: userPassword,
 						};
 						User.create(data).then((newUser, created) => {
@@ -49,12 +49,12 @@ module.exports = (passport, user) => {
 		)
 	);
 
-	// serialize
+	// Serialize
 	passport.serializeUser((user, done) => {
 		done(null, user.id);
 	});
 
-	// deserialzie user
+	// Deserialzie user
 	passport.deserializeUser((id, done) => {
 		User.findByPk(id).then(user => {
 			if (user) {
@@ -65,12 +65,12 @@ module.exports = (passport, user) => {
 		});
 	});
 
-	// Local Signin
+	// Local Sign In
 	passport.use(
 		"local-signin",
 		new LocalStrategy(
 			{
-				usernameField: "username",
+				usernameField: "email",
 				passwordField: "password",
 				passReqToCallback: true,
 			},
@@ -83,7 +83,7 @@ module.exports = (passport, user) => {
 
 				User.findOne({
 					where: {
-						username: username,
+						email: username,
 					},
 				})
 					.then(user => {
@@ -109,6 +109,40 @@ module.exports = (passport, user) => {
 							message: "Something went wrong with your Signin",
 						});
 					});
+			}
+		)
+	);
+
+	// Google Sign In
+	passport.use(
+		new GoogleStrategy(
+			{
+				clientID: process.env.GOOGLE_CLIENT_ID,
+				clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+				callbackURL: process.env.GOOGLE_CALLBACK_URL,
+			},
+			function (accessToken, refreshToken, profile, done) {
+				// console.log(profile);
+				User.findOne({
+					where: {
+						email: profile.emails[0].value,
+					},
+				}).then(user => {
+					if (user) {
+						user.createCart();
+						return done(null, user);
+					} else {
+						User.create({email: profile.emails[0].value}).then((newUser, created) => {
+							if (!newUser) {
+								return done(null, false);
+							}
+							if (newUser) {
+								newUser.createCart();
+								return done(null, newUser);
+							}
+						});
+					}
+				});
 			}
 		)
 	);

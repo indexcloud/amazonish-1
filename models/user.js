@@ -11,21 +11,17 @@ module.exports = (sequelize, Sequelize) => {
 		role: {
 			type: Sequelize.INTEGER,
 		},
-		username: {
+		email: {
 			type: Sequelize.STRING,
 			unique: true,
 			allowNull: false,
-			validate: {notNull: true, notEmpty: true},
-		},
-		email: {
-			type: Sequelize.STRING,
 			validate: {
 				isEmail: true,
 			},
 		},
 		password: {
 			type: Sequelize.STRING,
-			allowNull: false, // if github authentication, change it to allow null
+			allowNull: true,
 			validate: {notEmpty: true},
 		},
 	});

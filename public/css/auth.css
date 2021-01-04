@@ -1,0 +1,16 @@
+.signin-form,
+.signup-form {
+	width: 20rem;
+	max-width: 90%;
+	margin: auto;
+	display: block;
+}
+
+.signin-google {
+	margin-left: 2rem;
+}
+
+.signin-btns {
+	display: flex;
+	justify-content: space-between;
+}

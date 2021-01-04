@@ -1,22 +1,20 @@
 require("dotenv").config();
-const path = require("path");
 const express = require("express");
-const cors = require("cors");
-
-const errorController = require("./controllers/error");
 
 const app = express();
 const passport = require("passport");
 const session = require("express-session");
 
-// Importing routes
-const mechantRoutes = require("./routes/merchant");
-const shopRoutes = require("./routes/shop");
-const authRoutes = require("./routes/auth");
+const errorController = require("./controllers/error");
 
 // View engine setup
 app.set("view engine", "ejs");
 app.set("views", "./views");
+
+// Importing routes
+const mechantRoutes = require("./routes/merchant");
+const shopRoutes = require("./routes/shop");
+const authRoutes = require("./routes/auth");
 
 // Express BodyParser
 app.use(express.json()); // request body has been parsed
@@ -31,6 +29,13 @@ app.use(passport.session()); // persistent login sessions
 const db = require("./models");
 
 require("./config/passport.js")(passport, db.user);
+
+// Passing local variables to Template Engine Render Pages
+app.use((req, res, next) => {
+	res.locals.isAuthenticated = req.session.isLoggedIn;
+	// res.locals.csrfToken = req.csrfToken();
+	next();
+});
 
 app.use(authRoutes);
 app.use(shopRoutes);

@@ -16,6 +16,11 @@
                             value="<% if (editing) { %><%= product.title %><% } %>">
                     </div>
                     <div class="form-control">
+                        <label for="category">Category</label>
+                        <input type="text" name="category" id="category"
+                            value="<% if (editing) { %><%= product.category %><% } %>">
+                    </div>
+                    <div class="form-control">
                         <label for="imageUrl">Image URL</label>
                         <input type="text" name="imageUrl" id="imageUrl"
                             value="<% if (editing) { %><%= product.imageUrl %><% } %>">

@@ -7,6 +7,7 @@ module.exports = (sequelize, Sequelize) => {
 			primaryKey: true,
 		},
 		title: Sequelize.STRING,
+		category: Sequelize.STRING,
 		imageUrl: {
 			type: Sequelize.STRING,
 			allowNull: false,

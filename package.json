@@ -2,10 +2,7 @@
 	"name": "Amazonish",
 	"version": "1.0.0",
 	"description": "",
-	"main": "app.js",
-	"engines": {
-		"node": "12.18.3"
-	},
+	"main": "server.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "node app.js"
@@ -29,7 +26,7 @@
 		"express": "^4.17.1",
 		"express-session": "^1.17.1",
 		"passport": "^0.4.1",
-		"passport-github": "^1.1.0",
+		"passport-google-oauth": "^2.0.0",
 		"passport-local": "^1.0.0",
 		"pg": "^8.5.1",
 		"sequelize": "^6.3.5",

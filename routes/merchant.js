@@ -1,23 +1,19 @@
 const express = require("express");
 const passport = require("passport");
 const merchantController = require("../controllers/merchant");
+const authController = require("../controllers/auth");
 const router = express.Router();
 
-router.get("/", (req, res, next) => {
-	res.send("You are in the merchant mode.");
-});
+router.get("/products", authController.isLoggedIn, merchantController.getProducts); // Shop index page after log in
 
-router.get("/products", merchantController.getProducts); // Shop index page after log in
-// router.get("/products", authController.IsAuthenticated, merchantController.getProducts); // check log in before go to another route
+router.get("/add-product", authController.isLoggedIn, merchantController.getAddProduct);
 
-router.get("/add-product", merchantController.getAddProduct);
+router.post("/add-product", authController.isLoggedIn, merchantController.postAddProduct);
 
-router.post("/add-product", merchantController.postAddProduct);
+router.get("/edit-product/:productId", authController.isLoggedIn, merchantController.getEditProduct);
 
-router.get("/edit-product/:id", merchantController.getEditProduct);
+router.post("/edit-product/", authController.isLoggedIn, merchantController.postEditProduct);
 
-router.patch("/edit-product/:id", merchantController.pathEditProduct);
-
-router.post("/delete-product", merchantController.deleteProduct); // delete or post
+router.post("/delete-product", authController.isLoggedIn, merchantController.deleteProduct); // delete or post
 
 module.exports = router;

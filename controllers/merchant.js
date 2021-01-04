@@ -31,44 +31,20 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = (req, res, next) => {
-	// if (!req.body.title) {
-	// 	res.satus(400).send({
-	// 		message: "Content can not be empty!",
-	// 	});
-	// 	return;
-	// }
-
-	// const product = {
-	// 	title: req.body.title,
-	// 	imageUrl: req.body.imageUrl,
-	// 	price: req.body.price,
-	// 	description: req.body.description,
-	// 	review: req.body.review,
-	// };
-
-	// Product.create(product)
-	// 	.then(result => {
-	// 		console.log("Created Product");
-	// 		res.redirect("/merchant/products");
-	// 	})
-	// 	.catch(err => {
-	// 		res.status(500).send({
-	// 			message: err.message || "Some error occurred while creating the Tutorial.",
-	// 		});
-	// 	});
 	const title = req.body.title;
+	const category = req.body.category;
 	const imageUrl = req.body.imageUrl;
 	const price = req.body.price;
 	const description = req.body.description;
 	req.user
 		.createProduct({
 			title: title,
+			category: category,
 			price: price,
 			imageUrl: imageUrl,
 			description: description,
 		})
 		.then(result => {
-			// console.log(result);
 			console.log("Created Product");
 			res.redirect("/merchant/products");
 		})
@@ -101,33 +77,17 @@ exports.getEditProduct = (req, res, next) => {
 		.catch(err => console.log(err));
 };
 
-exports.pathEditProduct = (req, res, next) => {
-	// const id = req.params.id;
-	// Product.update(req.body, {where: {id: id}})
-	// 	.then(num => {
-	// 		if (num == 1) {
-	// 			res.send({
-	// 				message: "Product was udpated successfully.",
-	// 			});
-	// 		} else {
-	// 			res.send({
-	// 				message: `Cannot update Product with id=${id}. Maybe Product was not found or req.body is empty!`,
-	// 			});
-	// 		}
-	// 	})
-	// 	.catch(err => {
-	// 		res.status(500).send({
-	// 			message: "Error updating Product with id=" + id,
-	// 		});
-	// 	});
+exports.postEditProduct = (req, res, next) => {
 	const prodId = req.body.productId;
 	const updatedTitle = req.body.title;
+	const updatedCategory = req.body.category;
 	const updatedImageUrl = req.body.imageUrl;
 	const updatedPrice = req.body.price;
 	const updatedDesc = req.body.description;
 	Product.findByPk(prodId)
 		.then(product => {
 			product.title = updatedTitle;
+			product.category = updatedCategory;
 			product.price = updatedPrice;
 			product.description = updatedDesc;
 			product.imageUrl = updatedImageUrl;
@@ -141,28 +101,6 @@ exports.pathEditProduct = (req, res, next) => {
 };
 
 exports.deleteProduct = (req, res, next) => {
-	// const id = req.params.id;
-
-	// Product.destroy({
-	// 	where: {id: id},
-	// })
-	// 	.then(num => {
-	// 		if (num == 1) {
-	// 			// res.send({
-	// 			// 	message: "Product was deleted successfully!",
-	// 			// });
-	// 			res.redirect("/merchant/products");
-	// 		} else {
-	// 			res.send({
-	// 				message: `Cannot delete Product with id=${id}. Maybe Product was not found!`,
-	// 			});
-	// 		}
-	// 	})
-	// 	.catch(err => {
-	// 		res.status(500).send({
-	// 			message: "Could not delete Product with id=" + id,
-	// 		});
-	// 	});
 	const prodId = req.body.productId;
 	Product.findByPk(prodId)
 		.then(product => {

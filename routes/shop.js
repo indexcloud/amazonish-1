@@ -1,8 +1,8 @@
 const express = require("express");
 const passport = require("passport");
 const shopController = require("../controllers/shop");
-const router = express.Router();
 const authController = require("../controllers/auth");
+const router = express.Router();
 
 router.get("/", shopController.getIndex); // Shop index page before log in
 
