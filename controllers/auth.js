@@ -1,9 +1,14 @@
-const passport = require("passport");
-
 exports.getSignUp = (req, res, next) => {
+	let message = req.flash("error");
+	if (message.length > 0) {
+		message = message[0];
+	} else {
+		message = null;
+	}
 	res.render("auth/signup", {
 		pageTitle: "Sign Up",
 		path: "/signup",
+		errorMessage: message,
 	});
 };
 
@@ -12,9 +17,16 @@ exports.postSignUp = (req, res, next) => {
 };
 
 exports.getSignIn = (req, res, next) => {
+	let message = req.flash("error");
+	if (message.length > 0) {
+		message = message[0];
+	} else {
+		message = null;
+	}
 	res.render("auth/signin", {
 		pageTitle: "Sign In",
 		path: "/signin",
+		errorMessage: message,
 	});
 };
 
@@ -34,4 +46,18 @@ exports.isLoggedIn = (req, res, next) => {
 		return next();
 	}
 	res.redirect("/signin");
+};
+
+exports.getReset = (req, res, next) => {
+	let message = req.flash("error");
+	if (message.length > 0) {
+		message = message[0];
+	} else {
+		message = null;
+	}
+	res.render("auth/reset", {
+		path: "/reset",
+		pageTitle: "Reset Password",
+		errorMessage: message,
+	});
 };

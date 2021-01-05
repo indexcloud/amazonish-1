@@ -19,6 +19,7 @@ module.exports = (passport, user) => {
 				const generateHash = password => {
 					return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 				};
+				const confirmPassword = req.body.confirmPassword;
 
 				User.findOne({
 					where: {
@@ -26,9 +27,11 @@ module.exports = (passport, user) => {
 					},
 				}).then(user => {
 					if (user) {
-						return done(null, false, {
-							message: "User already existed",
-						});
+						req.flash("error", "E-mail exists already, please pick a different one.");
+						return done(null, false);
+					} else if (password !== confirmPassword) {
+						req.flash("error", "Password and Confirm Password does not match.");
+						return done(null, false);
 					} else {
 						const userPassword = generateHash(password);
 						const data = {
@@ -88,14 +91,12 @@ module.exports = (passport, user) => {
 				})
 					.then(user => {
 						if (!user) {
-							return done(null, false, {
-								message: "User does not exist",
-							});
+							req.flash("error", "Invalid email or password.");
+							return done(null, false);
 						}
 						if (!isValidPassword(user.password, password)) {
-							return done(null, false, {
-								message: "Incorrect password.",
-							});
+							req.flash("error", "Invalid email or password.");
+							return done(null, false);
 						}
 
 						user.createCart();

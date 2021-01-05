@@ -6,12 +6,12 @@ const router = express.Router();
 // Local Sign Up
 router.get("/signup", authController.getSignUp);
 
-router.post("/signup", passport.authenticate("local-signup"), authController.postSignUp);
+router.post("/signup", passport.authenticate("local-signup", {failureRedirect: "/signup"}), authController.postSignUp);
 
 // Local Sign In
 router.get("/signin", authController.getSignIn);
 
-router.post("/signin", passport.authenticate("local-signin"), authController.postSignIn);
+router.post("/signin", passport.authenticate("local-signin", {failureRedirect: "/signin"}), authController.postSignIn);
 
 // Google Sign In
 router.get("/auth/google", passport.authenticate("google", {scope: ["profile", "email"]}));
@@ -23,5 +23,8 @@ router.get("/auth/google/callback", passport.authenticate("google", {failureRedi
 
 // Sign Out
 router.get("/signout", authController.getSignOut);
+
+// Reset Password
+router.get("/reset", authController.getReset);
 
 module.exports = router;

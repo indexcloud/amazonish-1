@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const passport = require("passport");
 const session = require("express-session");
+const flash = require("connect-flash");
 
 const errorController = require("./controllers/error");
 
@@ -25,6 +26,8 @@ app.use(express.static("./public")); // linked to css and js files
 app.use(session({secret: "keyboard cat", resave: true, saveUninitialized: true}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
+
+app.use(flash());
 
 const db = require("./models");
 
