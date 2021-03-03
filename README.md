@@ -7,14 +7,8 @@ Amazonish is a backend developer project that mimics the functionality of an e-c
 
 ## Screenshots
 
-![alt text](https://github.com/OsheaRD/Amazonish/blob/main/img/ShopperView.png)
 
-![alt text](https://github.com/OsheaRD/Amazonish/blob/main/img/amazon-seller-homepage.png)
-
-
-
- 
- ## Tech Stack
+## Tech Stack
  
 ![JavaScript](https://img.shields.io/badge/-JavaScript-333333?style=flat&logo=javascript)&nbsp;
 ![HTML](https://img.shields.io/badge/-HTML-333333?style=flat&logo=HTML5)&nbsp;
